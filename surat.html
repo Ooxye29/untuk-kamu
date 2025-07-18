@@ -78,19 +78,41 @@
       box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
     }
     .flower {
-      position: fixed;
-      width: 25px;
-      height: 25px;
-      top: -30px;
-      background-image: url('assets/flower.png');
-      background-size: cover;
-      z-index: 999;
-      animation: fall linear infinite;
+  position: fixed;
+  top: -30px;
+  background-image: url('assets/flower.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  z-index: 999;
+  pointer-events: none;
+
+  /* Ukuran akan di-random di JS */
+  width: 30px;
+  height: 30px;
+
+  animation: fall linear infinite,
+             sway ease-in-out infinite,
+             spin ease-in-out infinite,
+             fadeout ease-in-out infinite;
     }
     @keyframes fall {
       0% { transform: translateY(0); }
       100% { transform: translateY(120vh); }
     }
+    @keyframes sway {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(20px); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg) scale(1); }
+  100% { transform: rotate(360deg) scale(1.1); }
+}
+
+@keyframes fadeout {
+  0% { opacity: 1; }
+  100% { opacity: 0.4; }
+}
     .quiz-option {
       background: #fff;
       border: 2px solid #f8bbd0;
