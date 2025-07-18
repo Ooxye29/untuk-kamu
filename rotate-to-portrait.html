@@ -65,12 +65,17 @@
 
   // Cek orientasi
   function checkOrientation() {
-    if (window.innerHeight > window.innerWidth) {
+    if (window.innerHeight > window.innerWidth) return;
+    const name = localStorage.getItem("username");
+    const dob = localStorage.getItem("dob");
+    if (name && dob) {
       window.location.href = "surat.html";
+    } else {
+      window.location.href = "index.html";
     }
   }
 
-  // Ganti teks setelah 30 detik kalau belum diputar
+  // Peringatan jeda 30 detik
   setTimeout(() => {
     if (!timeoutTriggered) {
       warningText.innerText = "Ih... kamu ngeyel ya? 😠\nRico marah nih, masa disuruh muter aja nggak mau? 😤\nTapi... ah yaudah, kamu tetep lucu sih 😌🖤";
@@ -78,7 +83,6 @@
     }
   }, 30000);
 
-  // Cek terus orientation setiap 1 detik
   setInterval(checkOrientation, 1000);
 </script>
 
