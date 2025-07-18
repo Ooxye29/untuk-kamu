@@ -41,7 +41,6 @@
 
     #slide-container {
       max-width: 90%;
-      position: relative;
     }
 
     .slide {
@@ -60,8 +59,8 @@
 
     .typing {
       border-right: 2px solid #5a2a2a;
-      animation: caret 0.7s infinite;
       white-space: pre-wrap;
+      animation: caret 0.7s infinite;
     }
 
     @keyframes caret {
@@ -69,22 +68,19 @@
       50% { border-color: #5a2a2a; }
     }
 
-    .italic {
-      font-style: italic;
-    }
-
     .next-btn {
       margin-top: 25px;
-      padding: 10px 22px;
+      padding: 10px 20px;
       background-color: #5a2a2a;
-      color: white;
+      color: #fff;
       font-family: inherit;
       border: none;
       border-radius: 8px;
       font-size: 1em;
       cursor: pointer;
       opacity: 0;
-      animation: fadeIn 1s ease 0.5s forwards;
+      animation: fadeIn 1s ease forwards;
+      animation-delay: 0.5s;
     }
 
     @keyframes fadeIn {
@@ -92,8 +88,8 @@
     }
 
     .gif-circle {
-      width: 120px;
-      height: 120px;
+      width: 130px;
+      height: 130px;
       border-radius: 50%;
       overflow: hidden;
       margin: 0 auto;
@@ -116,7 +112,7 @@
 <div id="slide-container">
   <div class="slide active">
     <span id="typing-text" class="typing"></span>
-    <button class="next-btn" onclick="nextSlide()">Lanjut ➤</button>
+    <button class="next-btn" style="display:none" onclick="nextSlide()">Lanjut ➤</button>
   </div>
 </div>
 
@@ -237,76 +233,79 @@ Sedalam-dalamnya. ❤️`,
 
 Maaf karna Rico tidak bisa memberikan hal yang spesial untuk dirimu..`,
 
-`<div class="gif-circle"><img src="assets/ayunan.gif" alt="gif"></div>`
+`<div class="gif-circle"><img src="assets/ayunan.gif" alt="GIF"></div>`
   ];
 
   let currentSlide = 0;
-  let typingText = document.getElementById("typing-text");
-  let isTyping = false;
   let charIndex = 0;
   let speed = 150;
+  let typingText = document.getElementById("typing-text");
+  let nextBtn = document.querySelector(".next-btn");
 
   function typeText(text, callback) {
     typingText.innerHTML = "";
     charIndex = 0;
-    isTyping = true;
+    nextBtn.style.display = "none";
 
     function typeChar() {
       if (charIndex < text.length) {
-        const char = text.charAt(charIndex);
+        let char = text.charAt(charIndex);
         typingText.innerHTML += char;
-        let delay = speed;
-        if (char === '.' || char === '\n') delay += 200;
         charIndex++;
+        let delay = speed;
+        if (char === '.' || char === '\n') delay += 250;
         setTimeout(typeChar, delay);
       } else {
-        isTyping = false;
+        setTimeout(() => {
+          nextBtn.style.display = "inline-block";
+        }, 300);
         if (callback) callback();
       }
     }
-
     typeChar();
   }
 
   function nextSlide() {
-    if (isTyping) return;
-
-    const container = document.getElementById("slide-container");
-    const oldSlide = container.querySelector(".slide.active");
-    oldSlide.classList.remove("active");
-
     currentSlide++;
     if (currentSlide >= slides.length) return;
 
+    const container = document.getElementById("slide-container");
+    container.innerHTML = '';
+
     const newSlide = document.createElement("div");
-    newSlide.classList.add("slide", "active");
+    newSlide.className = "slide active";
 
     if (currentSlide === slides.length - 1) {
-      newSlide.innerHTML = slides[currentSlide];
+      newSlide.innerHTML = slides[currentSlide]; // show GIF
     } else {
-      const newTyping = document.createElement("span");
-      newTyping.id = "typing-text";
-      newTyping.classList.add("typing");
-      newSlide.appendChild(newTyping);
+      const newText = document.createElement("span");
+      newText.id = "typing-text";
+      newText.className = "typing";
 
-      const nextBtn = document.createElement("button");
-      nextBtn.classList.add("next-btn");
-      nextBtn.innerText = "Lanjut ➤";
-      nextBtn.onclick = nextSlide;
-      newSlide.appendChild(nextBtn);
+      const newButton = document.createElement("button");
+      newButton.className = "next-btn";
+      newButton.textContent = "Lanjut ➤";
+      newButton.style.display = "none";
+      newButton.onclick = nextSlide;
+
+      newSlide.appendChild(newText);
+      newSlide.appendChild(newButton);
+      container.appendChild(newSlide);
+
+      typingText = newText;
+      nextBtn = newButton;
+
+      const cleanText = slides[currentSlide].replace(/\[nama\]/gi, nama);
+      typeText(cleanText);
+      return;
     }
 
     container.appendChild(newSlide);
-
-    typingText = document.getElementById("typing-text");
-
-    if (typingText) {
-      typeText(slides[currentSlide].replace(/\[nama\]/gi, nama));
-    }
   }
 
-  // Init slide pertama
+  // Mulai dengan slide pertama
   typeText(slides[0].replace(/\[nama\]/gi, nama));
 </script>
+
 </body>
 </html>
