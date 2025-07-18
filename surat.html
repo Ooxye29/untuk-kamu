@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Surat Ulang Tahun</title>
+
+  <link rel="stylesheet" href="style.css" />
+  <meta name="theme-color" content="#f3c6c6" />
+
+  <!-- Share preview -->
+  <meta property="og:title" content="Untuk Kamu, yang Pernah Bertahan" />
+  <meta property="og:description" content="Sebuah surat ulang tahun emosional, hanya untuk kamu yang telah bertahan sejauh ini." />
+  <meta property="og:image" content="assets/share-preview.jpg" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://yourvercel.vercel.app/surat.html" />
+</head>
+<body>
+  <audio autoplay loop>
+    <source src="assets/backsound.mp3" type="audio/mpeg" />
+  </audio>
+
+  <div class="surat-container">
+    <h1>💌 Untuk <span id="user-name"></span></h1>
+
+    <div class="surat-content">
+      <p>Hari ini... adalah ulang tahunmu.</p>
+
+      <p>Tapi ini bukan sekadar tentang lilin, kue, atau ucapan-ucapan cepat dari notifikasi.  
+      Hari ini… adalah waktu untuk melihat sejauh mana kamu telah bertahan.</p>
+
+      <p>Kamu tidak cuma bertambah usia.  
+      Kamu bertambah cerita.  
+      Bertambah luka, bertambah pelajaran, dan—meski kamu jarang sadari—bertambah kuat.</p>
+
+      <p>Aku tahu, tidak semua hari mudah untukmu.  
+      Kamu pernah menjalani pagi dengan mata bengkak dan hati berat.  
+      Pernah menyembunyikan tangis dengan tawa.  
+      Pernah pura-pura kuat agar orang lain tak khawatir.</p>
+
+      <p>Kamu pernah merasa seperti tidak cukup.  
+      Tidak cukup baik. Tidak cukup pintar. Tidak cukup dicintai.  
+      Tapi… kamu tetap datang. Tetap mencoba. Tetap hidup.  
+      Dan itu—adalah keberanian yang sering tidak dihargai.</p>
+
+      <p>Kamu pernah kecewa. Sangat kecewa.  
+      Saat harapanmu tak jadi kenyataan.  
+      Saat orang yang kamu percaya malah melukai.</p>
+
+      <p>Tapi kamu tidak berubah jadi pahit.  
+      Kamu tetap punya hati yang hangat.  
+      Tetap mau mengerti, bahkan saat kamu tidak dimengerti.</p>
+
+      <p>Kamu pernah marah. Tapi kamu memilih diam.  
+      Kamu pernah takut. Tapi kamu tetap jalan.  
+      Kamu pernah sedih. Tapi kamu tetap senyum.</p>
+
+      <p>Mungkin kamu lelah. Tapi kamu tidak menyerah.</p>
+
+      <p>Kadang kamu iri. Melihat orang lain terlihat lebih bahagia, lebih stabil, lebih dicintai.  
+      Tapi kamu tidak pernah berhenti jadi diri sendiri.</p>
+
+      <p>Kamu pernah rindu. Pada masa lalu. Pada versi dirimu yang lebih ringan.  
+      Tapi kamu juga tahu: kamu sudah berubah. Kamu sudah tumbuh.  
+      Dan pertumbuhan itu tidak selalu indah—tapi selalu berarti.</p>
+
+      <p>Kamu tahu, kamu sudah melewati banyak badai.  
+      Ada luka yang tak pernah kamu ceritakan, tapi kamu bawa dengan diam.  
+      Ada kesedihan yang tak ada yang tahu, tapi kamu peluk erat setiap malam.</p>
+
+      <p>Dan sekarang kamu di sini. Masih di sini.</p>
+
+      <p>Hari ini, bukan tentang pesta. Tapi tentang pengakuan:</p>
+
+      <p>Bahwa kamu istimewa.  
+      Bahwa kamu cukup.  
+      Bahwa kamu telah memberi banyak—pada orang, pada dunia, bahkan saat kamu sendiri kosong.</p>
+
+      <p>Kamu mencintai tanpa diminta.  
+      Kamu menguatkan orang lain sambil menahan goyahmu sendiri.  
+      Kamu memaafkan tanpa permintaan maaf.</p>
+
+      <p>Dan meskipun kamu sering merasa tak terlihat…  
+      Aku lihat kamu.  
+      Aku dengar kamu.  
+      Aku bangga padamu.</p>
+
+      <p>Mungkin tidak semua orang berkata ini padamu hari ini…  
+      Tapi aku akan.</p>
+
+      <blockquote>
+        Terima kasih sudah bertahan.<br>
+        Terima kasih sudah hidup.<br>
+        Terima kasih sudah tidak menyerah.
+      </blockquote>
+
+      <p>Hari ini, rasakan semua yang kamu rasakan.  
+      Tidak usah ditahan.  
+      Bahagia, haru, kecewa, cemas, rindu, semua boleh datang.  
+      Karena semua itu… adalah bukti kamu hidup sepenuhnya.</p>
+
+      <p>Kamu bukan hanya bertambah umur.  
+      Kamu bertambah makna.</p>
+
+      <p>Dan kamu pantas dirayakan.</p>
+
+      <h2>Selamat ulang tahun. 🥂</h2>
+
+      <p>Semoga tahun ini, kamu lebih tenang.  
+      Lebih jujur pada dirimu sendiri.  
+      Lebih berani untuk bahagia.</p>
+
+      <p>Aku doakan kamu...  
+      Pulih tanpa terburu-buru,  
+      Bahagia tanpa syarat,  
+      Dicintai tanpa keraguan.</p>
+
+      <p>Dan semoga, kamu juga bisa mencintai dirimu…  
+      sedalam-dalamnya. ❤️</p>
+    </div>
+  </div>
+
+  <script>
+    const name = localStorage.getItem("username") || "Kamu";
+    document.getElementById("user-name").innerText = name;
+  </script>
+</body>
+</html>
