@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mini Game</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="game-container">
+    <h2>Klik 5 ❤️ untuk lanjut!</h2>
+    <div id="hearts"></div>
+  </div>
+
+  <script>
+    let clicks = 0;
+    const hearts = document.getElementById("hearts");
+
+    for (let i = 0; i < 10; i++) {
+      const heart = document.createElement("span");
+      heart.innerHTML = "❤️";
+      heart.classList.add("heart");
+      heart.onclick = () => {
+        heart.style.opacity = 0.3;
+        clicks++;
+        if (clicks >= 5) {
+          window.location.href = "birthday.html";
+        }
+      };
+      hearts.appendChild(heart);
+    }
+  </script>
+</body>
+</html>
