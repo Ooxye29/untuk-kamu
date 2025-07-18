@@ -14,26 +14,34 @@
   </div>
 
   <script>
-    const name = localStorage.getItem("username");
-    const dob = new Date(localStorage.getItem("dob"));
-    const today = new Date();
+  const name = localStorage.getItem("username");
+  const dobString = localStorage.getItem("dob");
 
-    document.getElementById("user-name").innerText = name;
-    document.getElementById("dob-text").innerText = dob.toDateString();
+  if (!name || !dobString) {
+    alert("Akses tidak valid.");
+    window.location.href = "index.html";
+  }
 
-    const next = document.getElementById("next-phase");
+  const dob = new Date(dobString);
+  const today = new Date();
 
-    if (
-      today.getDate() === dob.getDate() &&
-      today.getMonth() === dob.getMonth()
-    ) {
-      next.innerHTML = `<a class="btn" href="surat.html">🎁 Buka Surat Ulang Tahun 🎁</a>`;
-    } else {
-      const nextBirthday = new Date(today.getFullYear(), dob.getMonth(), dob.getDate());
-      if (nextBirthday < today) nextBirthday.setFullYear(today.getFullYear() + 1);
-      const days = Math.ceil((nextBirthday - today) / (1000 * 60 * 60 * 24));
-      next.innerHTML = `<p>Ultah kamu masih ${days} hari lagi 🕒<br>Sampai hari itu tiba, kamu belum bisa lanjut ke kejutan selanjutnya.</p>`;
-    }
+  document.getElementById("user-name").innerText = name;
+  document.getElementById("dob-text").innerText = dob.toDateString();
+
+  const next = document.getElementById("next-phase");
+
+  if (
+    today.getDate() === dob.getDate() &&
+    today.getMonth() === dob.getMonth()
+  ) {
+    next.innerHTML = `<a class="btn" href="surat.html">🎁 Buka Surat Ulang Tahun 🎁</a>`;
+  } else {
+    const nextBirthday = new Date(today.getFullYear(), dob.getMonth(), dob.getDate());
+    if (nextBirthday < today) nextBirthday.setFullYear(today.getFullYear() + 1);
+    const days = Math.ceil((nextBirthday - today) / (1000 * 60 * 60 * 24));
+    next.innerHTML = `<p>Ultah kamu masih ${days} hari lagi 🕒<br>Sampai hari itu tiba, kamu belum bisa lanjut ke kejutan selanjutnya.</p>`;
+  }
   </script>
+  
 </body>
 </html>
