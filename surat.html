@@ -6,7 +6,10 @@
   <title>Surat Ulang Tahun</title>
   <meta name="theme-color" content="#f3c6c6" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap');
+    @font-face {
+      font-family: 'CafeMatcha';
+      src: url('fonts/CafeMatcha.ttf') format('truetype');
+    }
 
     * {
       margin: 0;
@@ -15,7 +18,7 @@
     }
 
     body {
-      font-family: 'CafeMatcha', 'Raleway', cursive;
+      font-family: 'CafeMatcha', sans-serif;
       background: linear-gradient(-45deg, #f3c6c6, #ffe3ec, #f9dada, #fad3e7);
       background-size: 400% 400%;
       animation: gradient 15s ease infinite;
@@ -27,6 +30,7 @@
       padding: 20px;
       text-align: center;
       overflow: hidden;
+      position: relative;
     }
 
     @keyframes gradient {
@@ -37,6 +41,7 @@
 
     #slide-container {
       max-width: 90%;
+      position: relative;
     }
 
     .slide {
@@ -46,7 +51,6 @@
       white-space: pre-wrap;
       opacity: 0;
       transition: opacity 0.8s ease;
-      cursor: pointer;
     }
 
     .slide.active {
@@ -56,8 +60,8 @@
 
     .typing {
       border-right: 2px solid #5a2a2a;
-      white-space: pre-wrap;
       animation: caret 0.7s infinite;
+      white-space: pre-wrap;
     }
 
     @keyframes caret {
@@ -68,6 +72,39 @@
     .italic {
       font-style: italic;
     }
+
+    .next-btn {
+      margin-top: 25px;
+      padding: 10px 22px;
+      background-color: #5a2a2a;
+      color: white;
+      font-family: inherit;
+      border: none;
+      border-radius: 8px;
+      font-size: 1em;
+      cursor: pointer;
+      opacity: 0;
+      animation: fadeIn 1s ease 0.5s forwards;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    .gif-circle {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin: 0 auto;
+      border: 3px solid #5a2a2a;
+    }
+
+    .gif-circle img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   </style>
 </head>
 <body>
@@ -76,9 +113,10 @@
   <source src="assets/backsound.mp3" type="audio/mpeg" />
 </audio>
 
-<div id="slide-container" onclick="nextSlide()">
+<div id="slide-container">
   <div class="slide active">
-    <span class="typing" id="typing-text"></span>
+    <span id="typing-text" class="typing"></span>
+    <button class="next-btn" onclick="nextSlide()">Lanjut ➤</button>
   </div>
 </div>
 
@@ -195,19 +233,20 @@ Dicintai tanpa keraguan.
 Dan semoga, kamu juga bisa mencintai dirimu...
 Sedalam-dalamnya. ❤️`,
 
-`<span class="italic">
-Trimakasih telah membaca secuil pesan dari Rico..<br><br>
-Maaf karna Rico tidak bisa memberikan hal yang spesial untuk dirimu..
-</span>`
+`Trimakasih telah membaca secuil pesan dari Rico..
+
+Maaf karna Rico tidak bisa memberikan hal yang spesial untuk dirimu..`,
+
+`<div class="gif-circle"><img src="assets/ayunan.gif" alt="gif"></div>`
   ];
 
   let currentSlide = 0;
   let typingText = document.getElementById("typing-text");
   let isTyping = false;
   let charIndex = 0;
-  let speed = 80;
+  let speed = 150;
 
-  function typeText(text) {
+  function typeText(text, callback) {
     typingText.innerHTML = "";
     charIndex = 0;
     isTyping = true;
@@ -217,11 +256,12 @@ Maaf karna Rico tidak bisa memberikan hal yang spesial untuk dirimu..
         const char = text.charAt(charIndex);
         typingText.innerHTML += char;
         let delay = speed;
-        if (char === '.' || char === '\n') delay += 250;
+        if (char === '.' || char === '\n') delay += 200;
         charIndex++;
         setTimeout(typeChar, delay);
       } else {
         isTyping = false;
+        if (callback) callback();
       }
     }
 
@@ -231,8 +271,8 @@ Maaf karna Rico tidak bisa memberikan hal yang spesial untuk dirimu..
   function nextSlide() {
     if (isTyping) return;
 
-    const slideContainer = document.getElementById("slide-container");
-    const oldSlide = slideContainer.querySelector(".slide.active");
+    const container = document.getElementById("slide-container");
+    const oldSlide = container.querySelector(".slide.active");
     oldSlide.classList.remove("active");
 
     currentSlide++;
@@ -240,25 +280,32 @@ Maaf karna Rico tidak bisa memberikan hal yang spesial untuk dirimu..
 
     const newSlide = document.createElement("div");
     newSlide.classList.add("slide", "active");
-    newSlide.onclick = nextSlide;
 
-    const newTyping = document.createElement("span");
-    newTyping.classList.add("typing");
-    newTyping.id = "typing-text";
+    if (currentSlide === slides.length - 1) {
+      newSlide.innerHTML = slides[currentSlide];
+    } else {
+      const newTyping = document.createElement("span");
+      newTyping.id = "typing-text";
+      newTyping.classList.add("typing");
+      newSlide.appendChild(newTyping);
 
-    if (currentSlide === slides.length - 1) newTyping.classList.add("italic");
+      const nextBtn = document.createElement("button");
+      nextBtn.classList.add("next-btn");
+      nextBtn.innerText = "Lanjut ➤";
+      nextBtn.onclick = nextSlide;
+      newSlide.appendChild(nextBtn);
+    }
 
-    newSlide.appendChild(newTyping);
-    slideContainer.appendChild(newSlide);
+    container.appendChild(newSlide);
 
-    typingText = newTyping;
-    charIndex = 0;
+    typingText = document.getElementById("typing-text");
 
-    const finalText = slides[currentSlide].replace(/\[nama\]/gi, nama);
-    typeText(finalText);
+    if (typingText) {
+      typeText(slides[currentSlide].replace(/\[nama\]/gi, nama));
+    }
   }
 
-  // Mulai dengan slide pertama
+  // Init slide pertama
   typeText(slides[0].replace(/\[nama\]/gi, nama));
 </script>
 </body>
