@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Surat Ulang Tahun</title>
-  <link rel="stylesheet" href="style.css" />
   <meta name="theme-color" content="#f3c6c6" />
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap');
@@ -25,9 +24,9 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
-      overflow: hidden;
       padding: 20px;
       text-align: center;
+      overflow: hidden;
     }
 
     @keyframes gradient {
@@ -36,14 +35,17 @@
       100% { background-position: 0% 50%; }
     }
 
+    #slide-container {
+      max-width: 90%;
+    }
+
     .slide {
       display: none;
       font-size: 1.2em;
       line-height: 1.8;
       white-space: pre-wrap;
-      max-width: 90%;
       opacity: 0;
-      transition: opacity 1s ease;
+      transition: opacity 0.8s ease;
       cursor: pointer;
     }
 
@@ -70,19 +72,20 @@
 </head>
 <body>
 
-  <audio autoplay loop>
-    <source src="assets/backsound.mp3" type="audio/mpeg" />
-  </audio>
+<audio autoplay loop>
+  <source src="assets/backsound.mp3" type="audio/mpeg" />
+</audio>
 
-  <!-- SLIDE PERTAMA: Sekarang bisa diklik -->
-  <div class="slide active" onclick="nextSlide()">
-    <span id="typing-text" class="typing"></span>
+<div id="slide-container" onclick="nextSlide()">
+  <div class="slide active">
+    <span class="typing" id="typing-text"></span>
   </div>
+</div>
 
-  <script>
-    const nama = localStorage.getItem("username") || "Kamu";
+<script>
+  const nama = localStorage.getItem("username") || "Kamu";
 
-    const slides = [
+  const slides = [
 `Hari ini... adalah hari ulang tahunmu.
 
 Tapi ini bukan sekadar hari tentang lilin, kue, atau ucapan-ucapan cepat dari notifikasi.
@@ -196,66 +199,67 @@ Sedalam-dalamnya. ❤️`,
 Trimakasih telah membaca secuil pesan dari Rico..<br><br>
 Maaf karna Rico tidak bisa memberikan hal yang spesial untuk dirimu..
 </span>`
-    ];
+  ];
 
-    let currentSlide = 0;
-    let typingText = document.getElementById("typing-text");
-    let isTyping = false;
-    let charIndex = 0;
-    let speed = 80; // dibuat lebih lambat
+  let currentSlide = 0;
+  let typingText = document.getElementById("typing-text");
+  let isTyping = false;
+  let charIndex = 0;
+  let speed = 80;
 
-    function typeText(text) {
-      typingText.innerHTML = "";
-      charIndex = 0;
-      isTyping = true;
+  function typeText(text) {
+    typingText.innerHTML = "";
+    charIndex = 0;
+    isTyping = true;
 
-      function typeChar() {
-        if (charIndex < text.length) {
-          const char = text.charAt(charIndex);
-          typingText.innerHTML += char;
-
-          let delay = speed;
-          if (char === '.' || char === '\n') delay = speed + 300;
-
-          charIndex++;
-          setTimeout(typeChar, delay);
-        } else {
-          isTyping = false;
-        }
+    function typeChar() {
+      if (charIndex < text.length) {
+        const char = text.charAt(charIndex);
+        typingText.innerHTML += char;
+        let delay = speed;
+        if (char === '.' || char === '\n') delay += 250;
+        charIndex++;
+        setTimeout(typeChar, delay);
+      } else {
+        isTyping = false;
       }
-
-      typeChar();
     }
 
-    function nextSlide() {
-      if (isTyping) return;
+    typeChar();
+  }
 
-      const currentEl = document.querySelector(".slide.active");
-      currentEl.classList.remove("active");
+  function nextSlide() {
+    if (isTyping) return;
 
-      currentSlide++;
-      if (currentSlide >= slides.length) return;
+    const slideContainer = document.getElementById("slide-container");
+    const oldSlide = slideContainer.querySelector(".slide.active");
+    oldSlide.classList.remove("active");
 
-      const newEl = document.createElement("div");
-      newEl.classList.add("slide", "active");
-      newEl.onclick = nextSlide;
+    currentSlide++;
+    if (currentSlide >= slides.length) return;
 
-      const newTyping = document.createElement("span");
-      newTyping.classList.add("typing");
-      if (currentSlide === slides.length - 1) newTyping.classList.add("italic");
-      newTyping.id = "typing-text";
+    const newSlide = document.createElement("div");
+    newSlide.classList.add("slide", "active");
+    newSlide.onclick = nextSlide;
 
-      newEl.appendChild(newTyping);
-      document.body.appendChild(newEl);
+    const newTyping = document.createElement("span");
+    newTyping.classList.add("typing");
+    newTyping.id = "typing-text";
 
-      setTimeout(() => {
-        typeText(slides[currentSlide].replace(/\[nama\]/gi, nama));
-      }, 100);
-    }
+    if (currentSlide === slides.length - 1) newTyping.classList.add("italic");
 
-    // Inisialisasi slide pertama
-    slides[0] = slides[0].replace(/\[nama\]/gi, nama);
-    typeText(slides[0]);
-  </script>
+    newSlide.appendChild(newTyping);
+    slideContainer.appendChild(newSlide);
+
+    typingText = newTyping;
+    charIndex = 0;
+
+    const finalText = slides[currentSlide].replace(/\[nama\]/gi, nama);
+    typeText(finalText);
+  }
+
+  // Mulai dengan slide pertama
+  typeText(slides[0].replace(/\[nama\]/gi, nama));
+</script>
 </body>
 </html>
