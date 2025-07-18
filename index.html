@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>Untuk Kamu, yang Pernah Bertahan</title>
+  <meta name="description" content="Ulang tahunmu kali ini berbeda. Ada yang menunggu di akhir… hanya jika kamu siap menerimanya.">
+  <meta property="og:title" content="Untuk Kamu, yang Pernah Bertahan" />
+  <meta property="og:description" content="Ulang tahunmu kali ini berbeda. Ada yang menunggu di akhir… hanya jika kamu siap menerimanya." />
+  <meta property="og:image" content="assets/share-preview.jpg" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://yourvercel.vercel.app/" />
+  <meta name="theme-color" content="#f3c6c6" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Force Landscape -->
+  <div id="landscape-warning">
+    <img src="assets/logo-animasi.gif" alt="Rotate Your Phone" />
+  </div>
+
+  <!-- Start Screen -->
+  <div id="start-screen">
+    <h2>Tap untuk mulai kejutan 🎬</h2>
+    <button id="play-btn">▶️ Putar Video</button>
+  </div>
+
+  <!-- Video Phase -->
+  <div id="video-container">
+    <video id="intro-video" playsinline controls>
+      <source src="assets/video.mp4" type="video/mp4" />
+      Browser tidak mendukung video.
+    </video>
+  </div>
+
+  <!-- Form Phase -->
+  <div id="form-phase" style="display: none;">
+    <form id="userForm">
+      <h2>Masukkan Namamu & Tanggal Lahir</h2>
+      <input type="text" id="name" placeholder="Nama Kamu" required />
+      <input type="date" id="dob" required />
+      <button type="submit">Lanjut</button>
+    </form>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    const playBtn = document.getElementById("play-btn");
+    const startScreen = document.getElementById("start-screen");
+    const videoContainer = document.getElementById("video-container");
+    const video = document.getElementById("intro-video");
+
+    playBtn.addEventListener("click", () => {
+      startScreen.style.display = "none";
+      videoContainer.style.display = "block";
+      video.play();
+    });
+
+    video.addEventListener("ended", () => {
+      videoContainer.style.display = "none";
+      document.getElementById("form-phase").style.display = "block";
+    });
+  </script>
+</body>
+</html>
