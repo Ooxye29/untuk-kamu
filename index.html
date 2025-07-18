@@ -61,39 +61,41 @@
       videoContainer.style.display = "none";
       document.getElementById("form-phase").style.display = "block";
     });
-    
-    <script>
-  function checkBirthday() {
-    const name = document.getElementById("name").value.trim();
-    const birthDate = document.getElementById("dob").value;
+  </script>
 
-    if (!name || !birthDate) {
-      alert("Nama dan tanggal lahir harus diisi ya!");
-      return;
-    }
+  <!-- VALIDASI ULANG TAHUN -->
+  <script>
+    function checkBirthday() {
+      const name = document.getElementById("name").value.trim();
+      const birthDate = document.getElementById("dob").value;
 
-    const today = new Date();
-    const inputDate = new Date(birthDate);
-    const bdayThisYear = new Date(today.getFullYear(), inputDate.getMonth(), inputDate.getDate());
-
-    if (
-      today.getDate() === bdayThisYear.getDate() &&
-      today.getMonth() === bdayThisYear.getMonth()
-    ) {
-      localStorage.setItem("userName", name);
-      window.location.href = "surat.html";
-    } else {
-      let nextBday = new Date(bdayThisYear);
-      if (today > bdayThisYear) {
-        nextBday.setFullYear(today.getFullYear() + 1);
+      if (!name || !birthDate) {
+        alert("Nama dan tanggal lahir harus diisi ya!");
+        return;
       }
 
-      const diffTime = nextBday - today;
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      const today = new Date();
+      const inputDate = new Date(birthDate);
+      const bdayThisYear = new Date(today.getFullYear(), inputDate.getMonth(), inputDate.getDate());
 
-      alert(`Hmm… ulang tahun kamu masih ${diffDays} hari lagi 😢\n\nSampai hari itu tiba, kamu belum bisa lanjut ke bagian selanjutnya ya.\n\nTapi Rico doain yang terbaik buat kamu dari sekarang 🫶`);
+      if (
+        today.getDate() === bdayThisYear.getDate() &&
+        today.getMonth() === bdayThisYear.getMonth()
+      ) {
+        localStorage.setItem("userName", name);
+        window.location.href = "surat.html";
+      } else {
+        let nextBday = new Date(bdayThisYear);
+        if (today > bdayThisYear) {
+          nextBday.setFullYear(today.getFullYear() + 1);
+        }
+
+        const diffTime = nextBday - today;
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+        alert(`Hmm… ulang tahun kamu masih ${diffDays} hari lagi 😢\n\nSampai hari itu tiba, kamu belum bisa lanjut ke bagian selanjutnya ya.\n\nTapi Rico doain yang terbaik buat kamu dari sekarang 🫶`);
+      }
     }
-  }
-</script>
+  </script>
 </body>
 </html>
