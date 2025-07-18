@@ -303,14 +303,26 @@ Sedalam-dalamnya. ❤️`,
   }
 
   function flowerRain() {
-    for (let i = 0; i < 20; i++) {
-      const flower = document.createElement("div");
-      flower.classList.add("flower");
-      flower.style.left = Math.random() * window.innerWidth + "px";
-      flower.style.animationDuration = 4 + Math.random() * 3 + "s";
-      document.body.appendChild(flower);
-      setTimeout(() => flower.remove(), 7000);
-    }
+  for (let i = 0; i < 20; i++) {
+    const flower = document.createElement("div");
+    flower.classList.add("flower");
+    
+    // Random posisi horizontal
+    flower.style.left = Math.random() * window.innerWidth + "px";
+
+    // Ukuran acak antara 25–40px
+    const size = 25 + Math.random() * 15;
+    flower.style.width = size + "px";
+    flower.style.height = size + "px";
+
+    // Durasi jatuh antara 4–7 detik
+    flower.style.animationDuration = 4 + Math.random() * 3 + "s";
+
+    document.body.appendChild(flower);
+
+    // Hapus setelah 8 detik
+    setTimeout(() => flower.remove(), 8000);
+  }
   }
 
   function answerQuiz() {
