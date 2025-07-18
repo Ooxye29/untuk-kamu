@@ -133,7 +133,7 @@
     });
 
     video.addEventListener("ended", () => {
-  videoOverlay.style.display = "none";
+  videoOverlay.remove();
   document.getElementById("form-phase").style.display = "block";
 
   // Reset layout body agar tidak fullscreen/zoom lagi
