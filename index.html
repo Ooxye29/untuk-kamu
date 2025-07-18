@@ -12,59 +12,127 @@
   <meta property="og:url" content="https://yourvercel.vercel.app/" />
   <meta name="theme-color" content="#f3c6c6" />
   <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background-color: #000;
+      color: #fff;
+    }
+
+    #video-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 99;
+      overflow: hidden;
+    }
+
+    #video-overlay video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    #start-screen {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 100;
+      background-color: rgba(0, 0, 0, 0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      text-align: center;
+    }
+
+    #start-screen h2 {
+      font-size: 1.5em;
+      margin-bottom: 20px;
+    }
+
+    #start-screen button {
+      padding: 10px 20px;
+      font-size: 1em;
+      background-color: #f3c6c6;
+      color: #000;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    #form-phase {
+      display: none;
+      text-align: center;
+      padding: 2em;
+    }
+
+    #form-phase input, #form-phase button {
+      margin: 10px;
+      padding: 10px;
+      font-size: 1em;
+      border-radius: 8px;
+      border: none;
+    }
+
+    #landscape-warning {
+      display: none;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Force Landscape -->
+  <!-- Landscape Warning -->
   <div id="landscape-warning">
     <img src="assets/logo-animasi.gif" alt="Rotate Your Phone" />
   </div>
 
-  <!-- Start Screen -->
-  <div id="start-screen">
-    <h2>Tap untuk mulai 🎬</h2>
-    <button id="play-btn">▶️ Putar</button>
-  </div>
-
-  <!-- Video Phase -->
-  <div id="video-container">
-    <video id="intro-video" playsinline controls>
+  <!-- Fullscreen Video with Overlay -->
+  <div id="video-overlay">
+    <video id="intro-video" playsinline autoplay muted>
       <source src="assets/video.mp4" type="video/mp4" />
-      Browser tidak mendukung video.
     </video>
+    <div id="start-screen">
+      <h2>Tap untuk mulai 🎬</h2>
+      <button id="play-btn">▶️ Putar</button>
+    </div>
   </div>
 
-  <!-- Form Phase -->
-  <div id="form-phase" style="display: none;">
-    <form id="userForm">
-      <h2>Masukkan Namamu & Tanggal Lahir</h2>
-      <input type="text" id="name" placeholder="Nama Kamu" required />
-      <input type="date" id="dob" required />
-      <button type="button" onclick="checkBirthday()">Lanjut</button>
-    </form>
+  <!-- Form Input Phase -->
+  <div id="form-phase">
+    <h2>Masukkan Namamu & Tanggal Lahir</h2>
+    <input type="text" id="name" placeholder="Nama Kamu" required />
+    <input type="date" id="dob" required />
+    <br />
+    <button type="button" onclick="checkBirthday()">Lanjut ➤</button>
   </div>
 
-  <script src="script.js"></script>
   <script>
     const playBtn = document.getElementById("play-btn");
     const startScreen = document.getElementById("start-screen");
-    const videoContainer = document.getElementById("video-container");
+    const videoOverlay = document.getElementById("video-overlay");
     const video = document.getElementById("intro-video");
 
     playBtn.addEventListener("click", () => {
       startScreen.style.display = "none";
-      videoContainer.style.display = "block";
       video.play();
+      video.muted = false;
     });
 
     video.addEventListener("ended", () => {
-      videoContainer.style.display = "none";
+      videoOverlay.style.display = "none";
       document.getElementById("form-phase").style.display = "block";
     });
-  </script>
 
-  <!-- VALIDASI ULANG TAHUN -->
-  <script>
     function checkBirthday() {
       const name = document.getElementById("name").value.trim();
       const birthDate = document.getElementById("dob").value;
@@ -83,7 +151,7 @@
         today.getMonth() === bdayThisYear.getMonth()
       ) {
         localStorage.setItem("userName", name);
-        window.location.href = "surat.html";
+        window.location.replace("surat.html");
       } else {
         let nextBday = new Date(bdayThisYear);
         if (today > bdayThisYear) {
