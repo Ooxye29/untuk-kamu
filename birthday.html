@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="birthday-container">
+    <h1>HAPPY BIRTHDAY, <span id="user-name"></span> 🎉</h1>
+    <p>Ultah kamu: <span id="dob-text"></span></p>
+    <div id="next-phase"></div>
+  </div>
+
+  <script>
+    const name = localStorage.getItem("username");
+    const dob = new Date(localStorage.getItem("dob"));
+    const today = new Date();
+
+    document.getElementById("user-name").innerText = name;
+    document.getElementById("dob-text").innerText = dob.toDateString();
+
+    const next = document.getElementById("next-phase");
+
+    if (
+      today.getDate() === dob.getDate() &&
+      today.getMonth() === dob.getMonth()
+    ) {
+      next.innerHTML = `<a class="btn" href="surat.html">🎁 Buka Surat Ulang Tahun 🎁</a>`;
+    } else {
+      const nextBirthday = new Date(today.getFullYear(), dob.getMonth(), dob.getDate());
+      if (nextBirthday < today) nextBirthday.setFullYear(today.getFullYear() + 1);
+      const days = Math.ceil((nextBirthday - today) / (1000 * 60 * 60 * 24));
+      next.innerHTML = `<p>Ultah kamu masih ${days} hari lagi 🕒<br>Sampai hari itu tiba, kamu belum bisa lanjut ke kejutan selanjutnya.</p>`;
+    }
+  </script>
+</body>
+</html>
