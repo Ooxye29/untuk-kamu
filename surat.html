@@ -1,50 +1,44 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Surat Ulang Tahun</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="preload" href="fonts/CafeMatcha.ttf" as="font" type="font/ttf" crossorigin="anonymous">
-  <link rel="preload" href="assets/ayunan.gif" as="image">
-  <link rel="preload" href="assets/backsound.mp3" as="audio">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preload" href="fonts/CafeMatcha.ttf" as="font" type="font/ttf" crossorigin="anonymous" />
+  <link rel="preload" href="assets/backsound.mp3" as="audio" />
   <style>
     @font-face {
       font-family: 'CafeMatcha';
       src: url('fonts/CafeMatcha.ttf') format('truetype');
     }
-
     body {
       margin: 0;
       padding: 0;
-      background: #fce4ec;
       font-family: 'CafeMatcha', cursive;
+      background-color: #fce4ec;
+      color: #5a2a2a;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
       overflow: hidden;
+      position: relative;
     }
-
     #container {
       text-align: center;
       padding: 40px 20px;
       max-width: 90%;
       font-size: 1.5em;
-      color: #5a2a2a;
     }
-
     .slide {
       display: none;
-      transition: all 0.6s ease-in-out;
+      transition: all 0.6s ease;
       opacity: 0;
     }
-
     .slide.active {
       display: block;
       opacity: 1;
     }
-
     .next-btn {
       position: fixed;
       bottom: 30px;
@@ -60,59 +54,75 @@
       opacity: 0;
       transition: opacity 0.5s ease;
     }
-
     .next-btn.show {
       opacity: 1;
     }
-
     .gif-container {
-      margin-top: 30px;
+      margin-top: 20px;
     }
-
     .gif-container img {
       width: 120px;
       height: 120px;
-      object-fit: cover;
       border-radius: 50%;
-      border: 3px solid #fff;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      object-fit: cover;
+      border: 3px solid white;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
     }
-
-    em {
-      font-style: italic;
+    .flower {
+      position: fixed;
+      width: 25px;
+      height: 25px;
+      top: -30px;
+      background-image: url('assets/flower.png');
+      background-size: cover;
+      z-index: 999;
+      animation: fall linear infinite;
+    }
+    @keyframes fall {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(120vh); }
+    }
+    .quiz-option {
+      background: #fff;
+      border: 2px solid #f8bbd0;
+      margin: 10px;
+      padding: 10px;
+      border-radius: 12px;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
+<audio autoplay loop id="bgm" src="assets/backsound.mp3"></audio>
 
-  <!-- Backsound -->
-  <audio autoplay loop id="bgm" src="assets/backsound.mp3"></audio>
-
-  <div id="container">
-    <div class="slide active" id="slide0"></div>
-    <div class="slide" id="slide1"></div>
-    <div class="slide" id="slide2"></div>
-    <div class="slide" id="slide3"></div>
-    <div class="slide" id="slide4"></div>
-    <div class="slide" id="slide5"></div>
-    <div class="slide" id="slide6"></div>
-    <div class="slide" id="slide7"></div>
-    <div class="slide" id="slide8"></div>
-    <div class="slide" id="slide9">
-      <p>🎮 Selesaikan mini game dulu ya sebelum kamu bisa lihat kejutan terakhir!</p>
-      <button onclick="finishMiniGame()">Main Sekarang</button>
+<div id="container">
+  <div class="slide active" id="slide0"></div>
+  <div class="slide" id="slide1"></div>
+  <div class="slide" id="slide2"></div>
+  <div class="slide" id="slide3"></div>
+  <div class="slide" id="slide4"></div>
+  <div class="slide" id="slide5"></div>
+  <div class="slide" id="slide6"></div>
+  <div class="slide" id="slide7"></div>
+  <div class="slide" id="slide8"></div>
+  <div class="slide" id="slide9">
+    <div class="gif-container">
+      <img src="assets/ayunan.gif" alt="GIF" />
     </div>
-    <div class="slide" id="slide10">
-      <div class="gif-container">
-        <img src="assets/ayunan.gif" alt="GIF Ayunan">
-      </div>
-    </div>
+    <p style="margin-top: 20px; font-size: 0.9em;">Mau main tebak-tebakan gak?</p>
   </div>
+  <div class="slide" id="slide10">
+    <p>Kenapa langit selalu terlihat indah, tapi gak seindah kamu?</p>
+    <div class="quiz-option" onclick="answerQuiz()">Karena kamu senyumnya lebih cerah ☀️</div>
+    <div class="quiz-option" onclick="answerQuiz()">Karena kamu bikin aku nyaman 💖</div>
+    <div class="quiz-option" onclick="answerQuiz()">Karena kamu yang selalu aku cari 🌷</div>
+    <p id="quiz-response" style="margin-top:20px; font-style: italic;"></p>
+  </div>
+</div>
 
-  <button class="next-btn" id="nextBtn" onclick="nextSlide()">Lanjut ➤</button>
-  <script>
+<button class="next-btn" id="nextBtn" onclick="nextSlide()">Lanjut ➤</button>
+<script>
   const slides = [
-    // Slide 0
     `Hari ini... adalah hari ulang tahunmu.
 
 Tapi ini bukan sekadar hari tentang lilin, kue, atau ucapan-ucapan cepat dari notifikasi.
@@ -126,7 +136,6 @@ Bertambah pelajaran!
 
 Dan, meski jarang kamu sadari, semakin lama dirimu bertambah kuat..`,
 
-    // Slide 1
     `Kamu pernah menjalani pagi dengan mata bengkak, kadang sakit.
 Kamu pernah menyembunyikan tangis dengan tawa.
 Kamu pernah pura-pura kuat agar orang lain tak khawatir.
@@ -138,7 +147,6 @@ Tetap mencoba.
 Tetap hidup.
 Dan itu adalah keberanian yang sering tidak dihargai.`,
 
-    // Slide 2
     `Kamu pernah kecewa. Sangat kecewa.
 Saat harapanmu tak jadi kenyataan.
 Saat orang yang kamu percaya malah melukai.
@@ -151,7 +159,6 @@ Kamu pernah marah. Tapi kamu memilih diam.
 Kamu pernah takut. Tapi kamu tetap jalan.
 Kamu pernah sedih. Tapi kamu tetap senyum.`,
 
-    // Slide 3
     `Mungkin kamu lelah.
 Tapi kamu tidak menyerah.
 
@@ -170,7 +177,6 @@ Dan pertumbuhan itu tidak selalu indah, tapi selalu berarti.
 
 Kamu tahu, kamu sudah melewati banyak badai.`,
 
-    // Slide 4
     `Ada luka yang tak pernah kamu ceritakan, tapi kamu bawa dengan diam.
 Ada kesedihan yang tak ada yang tahu, tapi kamu peluk erat setiap malam.
 
@@ -187,7 +193,6 @@ Kamu mencintai tanpa diminta.
 Kamu menguatkan orang lain sambil menahan goyahmu sendiri.
 Kamu memaafkan tanpa permintaan maaf.`,
 
-    // Slide 5
     `Dan meskipun kamu sering merasa tak terlihat…
 Rico lihat kamu!!!
 Rico dengar kamu!!!
@@ -199,7 +204,6 @@ Terima kasih sudah bertahan.
 Terima kasih sudah hidup.
 Terima kasih sudah tidak menyerah.`,
 
-    // Slide 6
     `Hari ini, rasakan semua yang kamu rasakan.
 Tidak usah ditahan.
 
@@ -211,7 +215,6 @@ Kamu bertambah makna.
 
 Dan kamu pantas dirayakan.`,
 
-    // Slide 7
     `HAPPY BIRTHDAY 🤍
 
 Semoga tahun ini...
@@ -227,7 +230,6 @@ Dicintai tanpa keraguan.
 Dan semoga, kamu juga bisa mencintai dirimu...
 Sedalam-dalamnya. ❤️`,
 
-    // Slide 8
     `*Trimakasih telah membaca secuil pesan dari Rico..*
 
 *Maaf karna Rico tidak bisa memberikan hal yang spesial untuk dirimu..*`
@@ -235,7 +237,6 @@ Sedalam-dalamnya. ❤️`,
 
   let current = 0;
   const nextBtn = document.getElementById("nextBtn");
-  const container = document.getElementById("container");
 
   function typeText(text, elementId, callback) {
     const element = document.getElementById(elementId);
@@ -259,9 +260,9 @@ Sedalam-dalamnya. ❤️`,
         if (charIndex < line.length) {
           p.innerHTML += line.charAt(charIndex);
           charIndex++;
-          setTimeout(typeChar, 50); // Kecepatan per huruf (lebih cepat dikit)
+          setTimeout(typeChar, 45); // kecepatan ketik
         } else {
-          setTimeout(() => typeLine(lineIndex + 1), 650); // jeda antar kalimat
+          setTimeout(() => typeLine(lineIndex + 1), 600); // jeda antar kalimat
         }
       }
 
@@ -272,45 +273,50 @@ Sedalam-dalamnya. ❤️`,
   }
 
   function nextSlide() {
-    if (current < slides.length) {
-      document.querySelectorAll(".slide")[current].classList.remove("active");
-      current++;
-      if (current < slides.length) {
-        const currentSlide = document.querySelectorAll(".slide")[current];
-        currentSlide.classList.add("active");
+    document.querySelectorAll(".slide")[current].classList.remove("active");
+    current++;
+    const slidesAll = document.querySelectorAll(".slide");
+
+    if (current < slidesAll.length) {
+      const currentSlide = slidesAll[current];
+      currentSlide.classList.add("active");
+      nextBtn.classList.remove("show");
+
+      // Hujan bunga hanya di slide 9 (GIF)
+      if (current === 9) flowerRain();
+
+      if (current <= 8) {
         typeText(slides[current], `slide${current}`);
-        nextBtn.classList.remove("show");
       } else {
-        document.querySelectorAll(".slide")[current].classList.remove("active");
-        document.querySelectorAll(".slide")[current + 1].classList.add("active");
-        nextBtn.classList.remove("show");
-        current++;
+        nextBtn.classList.add("show"); // show langsung di slide 9/10/11
       }
     }
   }
 
-  // Start slide 0
-  typeText(slides[0], "slide0");
-  </script>
-  <script>
-  function finishMiniGame() {
-    // Sembunyikan mini game
-    document.querySelectorAll(".slide")[current].classList.remove("active");
-    // Tampilkan slide GIF
-    const gifSlide = document.querySelector("#slide10");
-    gifSlide.classList.add("active");
-    current++;
+  function flowerRain() {
+    for (let i = 0; i < 20; i++) {
+      const flower = document.createElement("div");
+      flower.classList.add("flower");
+      flower.style.left = Math.random() * window.innerWidth + "px";
+      flower.style.animationDuration = 4 + Math.random() * 3 + "s";
+      document.body.appendChild(flower);
+      setTimeout(() => flower.remove(), 7000);
+    }
   }
 
-  // Autoplay fix untuk iOS/Android
-  document.addEventListener('click', function enableAudio() {
-    const bgm = document.getElementById("bgm");
-    if (bgm && bgm.paused) {
-      bgm.play();
-    }
-    document.removeEventListener('click', enableAudio);
+  function answerQuiz() {
+    document.getElementById("quiz-response").innerHTML =
+      "Hahaha… dasar kamu yaa 😤<br><br>Udah ah, salting Rico nanti 🫶";
+  }
+
+  // Mulai ketik slide pertama
+  typeText(slides[0], "slide0");
+
+  // Autoplay audio fix
+  document.addEventListener("click", function playAudioOnce() {
+    document.getElementById("bgm").play();
+    document.removeEventListener("click", playAudioOnce);
   });
 </script>
-
 </body>
 </html>
