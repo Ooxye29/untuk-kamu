@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const dob = new Date(document.getElementById("dob").value);
       localStorage.setItem("username", name);
       localStorage.setItem("dob", dob.toISOString());
-      window.location.href = "minigame.html";
+      window.location.href = "rotate-to-portrait.html";
     });
   }
 });
