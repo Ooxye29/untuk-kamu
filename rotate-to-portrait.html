@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Putar ke Potret Dulu Ya!</title>
+  <style>
+    @font-face {
+      font-family: 'CafeMatcha';
+      src: url('fonts/CafeMatcha.ttf') format('truetype');
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'CafeMatcha', sans-serif;
+      background: linear-gradient(120deg, #f8d7dd, #f3c6c6);
+      background-size: 200% 200%;
+      animation: bg 10s ease infinite;
+      color: #5a2a2a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 30px;
+      text-align: center;
+    }
+
+    @keyframes bg {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .text-box {
+      font-size: 1.4em;
+      line-height: 1.8;
+      max-width: 90%;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .fade {
+      animation: fadeIn 1s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="text-box fade" id="notice">
+  layarnya di putar lagi ya cantik 🖤
+</div>
+
+<script>
+  let warningText = document.getElementById('notice');
+  let timeoutTriggered = false;
+
+  // Cek orientasi
+  function checkOrientation() {
+    if (window.innerHeight > window.innerWidth) {
+      window.location.href = "surat.html";
+    }
+  }
+
+  // Ganti teks setelah 30 detik kalau belum diputar
+  setTimeout(() => {
+    if (!timeoutTriggered) {
+      warningText.innerText = "Ih... kamu ngeyel ya? 😠\nRico marah nih, masa disuruh muter aja nggak mau? 😤\nTapi... ah yaudah, kamu tetep lucu sih 😌🖤";
+      timeoutTriggered = true;
+    }
+  }, 30000);
+
+  // Cek terus orientation setiap 1 detik
+  setInterval(checkOrientation, 1000);
+</script>
+
+</body>
+</html>
