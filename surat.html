@@ -305,12 +305,12 @@ Sedalam-dalamnya. ❤️`,
   }
 
   function answerQuiz() {
-    document.getElementById("quiz-response").innerHTML =
-      "Hahaha… dasar kamu yaa 😤<br><br>Udah ah, salting Rico nanti 🫶";
+  const response = document.getElementById("quiz-response");
+  response.innerHTML = "Hahaha… dasar kamu yaa 😤<br><br>Udah ah, salting Rico nanti 🫶";
+  
+  // Sembunyikan tombol lanjut, karena ini sudah akhir
+  nextBtn.classList.remove("show");
   }
-
-  // Mulai ketik slide pertama
-  typeText(slides[0], "slide0");
 
   // Autoplay audio fix
   document.addEventListener("click", function playAudioOnce() {
