@@ -84,19 +84,46 @@
       border: none;
     }
 
+    /* Warning jika portrait */
     #landscape-warning {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      width: 100vw;
+      height: 100vh;
+      background-color: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #landscape-warning img {
+      width: 150px;
+    }
+
+    body.portrait #video-overlay,
+    body.portrait #start-screen,
+    body.portrait #form-phase {
+      display: none !important;
+    }
+
+    body.portrait #landscape-warning {
+      display: flex;
+    }
+
+    body.landscape #landscape-warning {
       display: none;
     }
   </style>
 </head>
 <body>
 
-  <!-- Landscape Warning -->
+  <!-- Warning Rotate (Potret) -->
   <div id="landscape-warning">
     <img src="assets/logo-animasi.gif" alt="Rotate Your Phone" />
   </div>
 
-  <!-- Fullscreen Video with Overlay -->
+  <!-- Fullscreen Video -->
   <div id="video-overlay">
     <video id="intro-video" playsinline autoplay muted>
       <source src="assets/video.mp4" type="video/mp4" />
@@ -107,7 +134,7 @@
     </div>
   </div>
 
-  <!-- Form Input Phase -->
+  <!-- Form Input -->
   <div id="form-phase">
     <h2>Masukkan Namamu & Tanggal Lahir</h2>
     <input type="text" id="name" placeholder="Nama Kamu" required />
@@ -117,6 +144,23 @@
   </div>
 
   <script>
+    // Deteksi Landscape
+    function detectOrientation() {
+      const isPortrait = window.innerHeight > window.innerWidth;
+      if (isPortrait) {
+        document.body.classList.add("portrait");
+        document.body.classList.remove("landscape");
+      } else {
+        document.body.classList.add("landscape");
+        document.body.classList.remove("portrait");
+      }
+    }
+
+    window.addEventListener("resize", detectOrientation);
+    window.addEventListener("orientationchange", detectOrientation);
+    window.addEventListener("load", detectOrientation);
+
+    // Video play
     const playBtn = document.getElementById("play-btn");
     const startScreen = document.getElementById("start-screen");
     const videoOverlay = document.getElementById("video-overlay");
@@ -133,6 +177,7 @@
       document.getElementById("form-phase").style.display = "block";
     });
 
+    // Validasi Ulang Tahun
     function checkBirthday() {
       const name = document.getElementById("name").value.trim();
       const birthDate = document.getElementById("dob").value;
