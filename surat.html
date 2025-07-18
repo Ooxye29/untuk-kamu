@@ -6,7 +6,6 @@
   <title>Surat Ulang Tahun</title>
   <link rel="stylesheet" href="style.css" />
   <meta name="theme-color" content="#f3c6c6" />
-
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap');
 
@@ -45,12 +44,12 @@
       max-width: 90%;
       opacity: 0;
       transition: opacity 1s ease;
+      cursor: pointer;
     }
 
     .slide.active {
       display: block;
       opacity: 1;
-      cursor: pointer;
     }
 
     .typing {
@@ -75,6 +74,7 @@
     <source src="assets/backsound.mp3" type="audio/mpeg" />
   </audio>
 
+  <!-- SLIDE PERTAMA: Sekarang bisa diklik -->
   <div class="slide active" onclick="nextSlide()">
     <span id="typing-text" class="typing"></span>
   </div>
@@ -202,7 +202,7 @@ Maaf karna Rico tidak bisa memberikan hal yang spesial untuk dirimu..
     let typingText = document.getElementById("typing-text");
     let isTyping = false;
     let charIndex = 0;
-    let speed = 50;
+    let speed = 80; // dibuat lebih lambat
 
     function typeText(text) {
       typingText.innerHTML = "";
@@ -211,9 +211,14 @@ Maaf karna Rico tidak bisa memberikan hal yang spesial untuk dirimu..
 
       function typeChar() {
         if (charIndex < text.length) {
-          typingText.innerHTML += text.charAt(charIndex);
+          const char = text.charAt(charIndex);
+          typingText.innerHTML += char;
+
+          let delay = speed;
+          if (char === '.' || char === '\n') delay = speed + 300;
+
           charIndex++;
-          setTimeout(typeChar, (text[charIndex - 1] === "." || text[charIndex - 1] === "\n") ? speed + 150 : speed);
+          setTimeout(typeChar, delay);
         } else {
           isTyping = false;
         }
@@ -248,7 +253,7 @@ Maaf karna Rico tidak bisa memberikan hal yang spesial untuk dirimu..
       }, 100);
     }
 
-    // Inisialisasi pertama
+    // Inisialisasi slide pertama
     slides[0] = slides[0].replace(/\[nama\]/gi, nama);
     typeText(slides[0]);
   </script>
