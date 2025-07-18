@@ -1,0 +1,65 @@
+@font-face {
+  font-family: 'CafeMatcha';
+  src: url('fonts/CafeMatcha.ttf');
+}
+
+body {
+  margin: 0;
+  font-family: 'CafeMatcha', cursive;
+  background-color: #f3c6c6;
+  color: #5a2a2a;
+  text-align: center;
+}
+
+input, button {
+  padding: 12px;
+  margin: 10px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1em;
+}
+
+button {
+  background-color: #fff0f5;
+  cursor: pointer;
+}
+
+.heart {
+  font-size: 2rem;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.btn {
+  display: inline-block;
+  padding: 15px 25px;
+  background: #ffe5ec;
+  color: #5a2a2a;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+#landscape-warning {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  width: 100vw;
+  height: 100vh;
+  background: #f3c6c6;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (orientation: portrait) {
+  #landscape-warning {
+    display: flex;
+  }
+
+  #start-screen,
+  #video-container,
+  #form-phase {
+    display: none !important;
+  }
+}
