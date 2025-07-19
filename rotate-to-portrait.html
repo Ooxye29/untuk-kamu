@@ -25,7 +25,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100dvh;
+      height: 100vh;
       text-align: center;
       padding: 30px;
     }
@@ -63,26 +63,26 @@
   const notice = document.getElementById("notice");
 
   function redirectIfPortrait() {
-    if (window.innerHeight > window.innerWidth) {
-      const name = localStorage.getItem("username");
-      const dob = localStorage.getItem("dob");
-      if (name && dob) {
-        window.location.href = "surat.html";
-      } else {
-        window.location.href = "index.html";
-      }
+    if (window.innerHeight > window.innerWidth) return;
+
+    const name = localStorage.getItem("username");
+    const dob = localStorage.getItem("dob");
+
+    if (name && dob) {
+      window.location.href = "surat.html";
+    } else {
+      window.location.href = "index.html";
     }
   }
 
-  // Deteksi saat orientasi benar-benar berubah ke portrait
+  // Cek orientasi saat berubah
   window.addEventListener("orientationchange", () => {
-    // Tunggu 500ms biar layout stabil
     setTimeout(() => {
       redirectIfPortrait();
-    }, 500);
+    }, 500); // beri waktu transisi
   });
 
-  // Pesan tambahan jika terlalu lama
+  // Tambahan peringatan jika diam lebih dari 30 detik
   setTimeout(() => {
     notice.innerHTML = "Ih... kamu ngeyel ya? 😠<br>Rico marah nih, masa disuruh muter aja nggak mau? 😤<br>Tapi... ah yaudah, kamu tetep lucu sih 😌🖤";
   }, 30000);
