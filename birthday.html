@@ -5,6 +5,49 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Happy Birthday</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .birthday-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+      background-color: #f8d7dd;
+      background-image: linear-gradient(120deg, #f8d7dd, #f3c6c6);
+      text-align: center;
+    }
+
+    .birthday-container h1 {
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
+
+    .birthday-container p {
+      font-size: 1.2em;
+      margin-top: 5px;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 12px 24px;
+      background-color: #ffe5ec;
+      color: #5a2a2a;
+      border: none;
+      border-radius: 12px;
+      font-size: 1em;
+      font-family: 'CafeMatcha';
+      text-decoration: none;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #fddde6;
+    }
+  </style>
 </head>
 <body>
   <div class="birthday-container">
@@ -14,34 +57,35 @@
   </div>
 
   <script>
-  const name = localStorage.getItem("username");
-  const dobString = localStorage.getItem("dob");
+    const name = localStorage.getItem("username");
+    const dobString = localStorage.getItem("dob");
 
-  if (!name || !dobString) {
-    alert("Akses tidak valid.");
-    window.location.href = "index.html";
-  }
+    if (!name || !dobString) {
+      alert("Akses tidak valid.");
+      window.location.href = "index.html";
+    }
 
-  const dob = new Date(dobString);
-  const today = new Date();
+    const dob = new Date(dobString);
+    const today = new Date();
 
-  document.getElementById("user-name").innerText = name;
-  document.getElementById("dob-text").innerText = dob.toDateString();
+    document.getElementById("user-name").innerText = name;
+    document.getElementById("dob-text").innerText = dob.toLocaleDateString("id-ID", {
+      year: 'numeric', month: 'long', day: 'numeric'
+    });
 
-  const next = document.getElementById("next-phase");
+    const next = document.getElementById("next-phase");
 
-  if (
-    today.getDate() === dob.getDate() &&
-    today.getMonth() === dob.getMonth()
-  ) {
-    next.innerHTML = `<a class="btn" href="surat.html">🎁 Buka Surat Ulang Tahun 🎁</a>`;
-  } else {
-    const nextBirthday = new Date(today.getFullYear(), dob.getMonth(), dob.getDate());
-    if (nextBirthday < today) nextBirthday.setFullYear(today.getFullYear() + 1);
-    const days = Math.ceil((nextBirthday - today) / (1000 * 60 * 60 * 24));
-    next.innerHTML = `<p>Ultah kamu masih ${days} hari lagi 🕒<br>Sampai hari itu tiba, kamu belum bisa lanjut ke kejutan selanjutnya.</p>`;
-  }
+    if (
+      today.getDate() === dob.getDate() &&
+      today.getMonth() === dob.getMonth()
+    ) {
+      next.innerHTML = `<a class="btn" href="surat.html">🎁 Buka Surat Ulang Tahun 🎁</a>`;
+    } else {
+      const nextBirthday = new Date(today.getFullYear(), dob.getMonth(), dob.getDate());
+      if (nextBirthday < today) nextBirthday.setFullYear(today.getFullYear() + 1);
+      const days = Math.ceil((nextBirthday - today) / (1000 * 60 * 60 * 24));
+      next.innerHTML = `<p>Ultah kamu masih ${days} hari lagi 🕒<br>Sampai hari itu tiba, kamu belum bisa lanjut ke kejutan selanjutnya.</p>`;
+    }
   </script>
-  
 </body>
 </html>
