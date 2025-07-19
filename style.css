@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'CafeMatcha';
-  src: url('fonts/CafeMatcha.ttf');
+  src: url('fonts/CafeMatcha.ttf') format('truetype');
 }
 
 body {
@@ -9,9 +9,11 @@ body {
   background-color: #f3c6c6;
   color: #5a2a2a;
   text-align: center;
+  overflow-x: hidden;
 }
 
-input, button {
+input,
+button {
   padding: 12px;
   margin: 10px;
   border: none;
@@ -28,6 +30,7 @@ button {
   font-size: 2rem;
   margin: 5px;
   cursor: pointer;
+  transition: opacity 0.3s ease;
 }
 
 .btn {
@@ -47,9 +50,13 @@ button {
   z-index: 9999;
   width: 100vw;
   height: 100vh;
-  background: #f3c6c6;
+  background: #000;
+  color: white;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  padding: 20px;
+  text-align: center;
 }
 
 @media screen and (orientation: portrait) {
@@ -58,8 +65,45 @@ button {
   }
 
   #start-screen,
-  #video-container,
+  #video-overlay,
   #form-phase {
     display: none !important;
   }
+}
+
+/* Bunga yang jatuh */
+.flower {
+  position: fixed;
+  top: -30px;
+  background-image: url('assets/flower.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  z-index: 999;
+  pointer-events: none;
+  width: 30px;
+  height: 30px;
+  animation: fall linear infinite,
+             sway ease-in-out infinite,
+             spin ease-in-out infinite,
+             fadeout ease-in-out infinite;
+}
+
+@keyframes fall {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(120vh); }
+}
+
+@keyframes sway {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(20px); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg) scale(1); }
+  100% { transform: rotate(360deg) scale(1.1); }
+}
+
+@keyframes fadeout {
+  0% { opacity: 1; }
+  100% { opacity: 0.4; }
 }
