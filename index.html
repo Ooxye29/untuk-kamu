@@ -13,7 +13,6 @@
   <meta name="theme-color" content="#f3c6c6" />
   <link rel="stylesheet" href="style.css" />
   <style>
-    /* Tambahan khusus fullscreen + scroll video */
     #video-overlay {
       position: fixed;
       top: 0;
@@ -74,15 +73,15 @@
 </head>
 <body>
 
-  <!-- Warning Rotate (Potret) -->
+  <!-- Warning Landscape -->
   <div id="landscape-warning">
     <img src="assets/logo-animasi.gif" alt="Rotate Your Phone" />
     <p>Silakan putar HP kamu ke posisi <strong>landscape</strong> untuk memulai 🎥</p>
   </div>
 
-  <!-- Video Fullscreen -->
+  <!-- Video Opening -->
   <div id="video-overlay">
-    <video id="intro-video" playsinline autoplay muted>
+    <video id="intro-video" playsinline muted>
       <source src="assets/video.mp4" type="video/mp4" />
     </video>
     <div id="start-screen">
@@ -104,14 +103,10 @@
     function detectOrientation() {
       const isPortrait = window.innerHeight > window.innerWidth;
       if (isPortrait) {
-        document.body.classList.add("portrait");
-        document.body.classList.remove("landscape");
         document.getElementById("landscape-warning").style.display = "flex";
         document.getElementById("video-overlay").style.display = "none";
         document.getElementById("form-phase").style.display = "none";
       } else {
-        document.body.classList.remove("portrait");
-        document.body.classList.add("landscape");
         document.getElementById("landscape-warning").style.display = "none";
         document.getElementById("video-overlay").style.display = "block";
       }
@@ -133,22 +128,22 @@
     });
 
     video.addEventListener("ended", () => {
-  videoOverlay.remove();
-  document.getElementById("form-phase").style.display = "block";
+      videoOverlay.remove();
+      document.getElementById("form-phase").style.display = "block";
 
-  // Reset layout body agar tidak fullscreen/zoom lagi
-  document.body.style.height = "auto";
-  document.body.style.overflow = "auto";
-  document.body.style.display = "block";
-  document.body.style.justifyContent = "unset";
-  document.body.style.alignItems = "unset";
-});
+      // Reset body layout
+      document.body.style.height = "auto";
+      document.body.style.overflow = "auto";
+      document.body.style.display = "block";
+      document.body.style.justifyContent = "unset";
+      document.body.style.alignItems = "unset";
+    });
 
     function checkBirthday() {
       const name = document.getElementById("name").value.trim();
       const birthDate = new Date(document.getElementById("dob").value);
 
-      if (!name || !birthDate) {
+      if (!name || isNaN(birthDate)) {
         alert("Nama dan tanggal lahir harus diisi ya!");
         return;
       }
@@ -156,18 +151,14 @@
       const today = new Date();
       const bdayThisYear = new Date(today.getFullYear(), birthDate.getMonth(), birthDate.getDate());
 
-      if (
-        today.getDate() === bdayThisYear.getDate() &&
-        today.getMonth() === bdayThisYear.getMonth()
-      ) {
+      if (today.getDate() === bdayThisYear.getDate() && today.getMonth() === bdayThisYear.getMonth()) {
         localStorage.setItem("username", name);
         localStorage.setItem("dob", birthDate.toISOString());
         window.location.href = "rotate-to-portrait.html";
       } else {
-        let nextBday = new Date(bdayThisYear);
-        if (today > bdayThisYear) {
-          nextBday.setFullYear(today.getFullYear() + 1);
-        }
+        const nextBday = (today > bdayThisYear)
+          ? new Date(today.getFullYear() + 1, birthDate.getMonth(), birthDate.getDate())
+          : bdayThisYear;
 
         const diffTime = nextBday - today;
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
@@ -177,4 +168,5 @@
     }
   </script>
 </body>
-</html>
+      </html>
+      
