@@ -5,6 +5,7 @@
 
 body {
   margin: 0;
+  padding: 0;
   font-family: 'CafeMatcha', cursive;
   background-color: #f3c6c6;
   color: #5a2a2a;
@@ -12,13 +13,13 @@ body {
   overflow-x: hidden;
 }
 
-input,
-button {
+input, button {
   padding: 12px;
   margin: 10px;
   border: none;
   border-radius: 8px;
   font-size: 1em;
+  font-family: 'CafeMatcha';
 }
 
 button {
@@ -30,7 +31,11 @@ button {
   font-size: 2rem;
   margin: 5px;
   cursor: pointer;
-  transition: opacity 0.3s ease;
+  transition: transform 0.2s;
+}
+
+.heart:hover {
+  transform: scale(1.2);
 }
 
 .btn {
@@ -42,6 +47,11 @@ button {
   border-radius: 8px;
   font-weight: bold;
   margin-top: 20px;
+  font-family: 'CafeMatcha';
+}
+
+.birthday-container {
+  padding: 30px;
 }
 
 #landscape-warning {
@@ -50,13 +60,9 @@ button {
   z-index: 9999;
   width: 100vw;
   height: 100vh;
-  background: #000;
-  color: white;
+  background: #f3c6c6;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
-  padding: 20px;
-  text-align: center;
 }
 
 @media screen and (orientation: portrait) {
@@ -65,13 +71,13 @@ button {
   }
 
   #start-screen,
-  #video-overlay,
+  #video-container,
   #form-phase {
     display: none !important;
   }
 }
 
-/* Bunga yang jatuh */
+/* Bunga jatuh */
 .flower {
   position: fixed;
   top: -30px;
@@ -82,10 +88,7 @@ button {
   pointer-events: none;
   width: 30px;
   height: 30px;
-  animation: fall linear infinite,
-             sway ease-in-out infinite,
-             spin ease-in-out infinite,
-             fadeout ease-in-out infinite;
+  animation: fall linear infinite, sway ease-in-out infinite, spin ease-in-out infinite, fadeout ease-in-out infinite;
 }
 
 @keyframes fall {
