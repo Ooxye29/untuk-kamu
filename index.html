@@ -13,6 +13,24 @@
   <meta name="theme-color" content="#f3c6c6" />
   <link rel="stylesheet" href="style.css" />
   <style>
+    #loading-spinner {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #f3c6c6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: opacity 0.5s ease;
+}
+
+#loading-spinner.hide {
+  opacity: 0;
+  pointer-events: none;
+}
+    
     #video-overlay {
       position: fixed;
       top: 0;
@@ -73,6 +91,11 @@
 </head>
 <body>
 
+  <!-- LOADING SPINNER -->
+<div id="loading-spinner">
+  <img src="assets/loading.svg" alt="Loading..." />
+</div>
+  
   <!-- Warning Landscape -->
   <div id="landscape-warning">
     <img src="assets/logo-animasi.gif" alt="Rotate Your Phone" />
