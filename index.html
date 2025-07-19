@@ -189,6 +189,16 @@
         alert(`Hmm… ulang tahun kamu masih ${diffDays} hari lagi 😢\n\nSampai hari itu tiba, kamu belum bisa lanjut ke bagian selanjutnya ya.\n\nTapi Rico doain yang terbaik buat kamu dari sekarang 🫶`);
       }
     }
+    
+    // Untuk menyembunyikan loading spinner saat halaman selesai dimuat
+window.addEventListener("load", function () {
+  const spinner = document.getElementById("loading-spinner");
+  if (spinner) {
+    spinner.classList.add("hide");
+    setTimeout(() => spinner.remove(), 800);
+  }
+});
+    
   </script>
 </body>
       </html>
