@@ -1,12 +1,3 @@
-<script>
-  const name = localStorage.getItem("username");
-  const dob = localStorage.getItem("dob");
-  if (!name || !dob) {
-    alert("Akses tidak valid. Mulai dari awal ya.");
-    window.location.href = "index.html";
-  }
-</script>
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -33,21 +24,25 @@
       overflow: hidden;
       position: relative;
     }
+
     #container {
       text-align: center;
       padding: 40px 20px;
       max-width: 90%;
       font-size: 1.5em;
     }
+
     .slide {
       display: none;
-      transition: all 0.6s ease;
       opacity: 0;
+      transition: all 0.6s ease;
     }
+
     .slide.active {
       display: block;
       opacity: 1;
     }
+
     .next-btn {
       position: fixed;
       bottom: 30px;
@@ -63,12 +58,15 @@
       opacity: 0;
       transition: opacity 0.5s ease;
     }
+
     .next-btn.show {
       opacity: 1;
     }
+
     .gif-container {
       margin-top: 20px;
     }
+
     .gif-container img {
       width: 120px;
       height: 120px;
@@ -77,42 +75,40 @@
       border: 3px solid white;
       box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
     }
+
     .flower {
-  position: fixed;
-  top: -30px;
-  background-image: url('assets/flower.png');
-  background-size: cover;
-  background-repeat: no-repeat;
-  z-index: 999;
-  pointer-events: none;
-
-  /* Ukuran akan di-random di JS */
-  width: 30px;
-  height: 30px;
-
-  animation: fall linear infinite,
-             sway ease-in-out infinite,
-             spin ease-in-out infinite,
-             fadeout ease-in-out infinite;
+      position: fixed;
+      top: -30px;
+      background-image: url('assets/flower.png');
+      background-size: cover;
+      background-repeat: no-repeat;
+      z-index: 999;
+      pointer-events: none;
+      width: 30px;
+      height: 30px;
+      animation: fall linear infinite, sway ease-in-out infinite, spin ease-in-out infinite, fadeout ease-in-out infinite;
     }
+
     @keyframes fall {
       0% { transform: translateY(0); }
       100% { transform: translateY(120vh); }
     }
+
     @keyframes sway {
-  0%, 100% { transform: translateX(0); }
-  50% { transform: translateX(20px); }
-}
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(20px); }
+    }
 
-@keyframes spin {
-  0% { transform: rotate(0deg) scale(1); }
-  100% { transform: rotate(360deg) scale(1.1); }
-}
+    @keyframes spin {
+      0% { transform: rotate(0deg) scale(1); }
+      100% { transform: rotate(360deg) scale(1.1); }
+    }
 
-@keyframes fadeout {
-  0% { opacity: 1; }
-  100% { opacity: 0.4; }
-}
+    @keyframes fadeout {
+      0% { opacity: 1; }
+      100% { opacity: 0.4; }
+    }
+
     .quiz-option {
       background: #fff;
       border: 2px solid #f8bbd0;
@@ -124,6 +120,7 @@
   </style>
 </head>
 <body>
+
 <audio autoplay loop id="bgm" src="assets/backsound.mp3"></audio>
 
 <div id="container">
@@ -152,9 +149,17 @@
 </div>
 
 <button class="next-btn" id="nextBtn" onclick="nextSlide()">Lanjut ➤</button>
+
 <script>
+  const name = localStorage.getItem("username");
+  const dob = localStorage.getItem("dob");
+  if (!name || !dob) {
+    alert("Akses tidak valid. Mulai dari awal ya.");
+    window.location.href = "index.html";
+  }
+
   const slides = [
-    `Hari ini... adalah hari ulang tahunmu.
+`Hari ini... adalah hari ulang tahunmu.
 
 Tapi ini bukan sekadar hari tentang lilin, kue, atau ucapan-ucapan cepat dari notifikasi.
 
@@ -167,86 +172,69 @@ Bertambah pelajaran!
 
 Dan, meski jarang kamu sadari, semakin lama dirimu bertambah kuat..`,
 
-    `Kamu pernah menjalani pagi dengan mata bengkak, kadang sakit.
+`Kamu pernah menjalani pagi dengan mata bengkak, kadang sakit.
 Kamu pernah menyembunyikan tangis dengan tawa.
 Kamu pernah pura-pura kuat agar orang lain tak khawatir.
 Kamu pernah merasa seperti tidak cukup.
-Tidak cukup baik, Tidak cukup pintar, Tidak cukup dicintai.
 
 Tapi… kamu tetap datang.
 Tetap mencoba.
 Tetap hidup.
 Dan itu adalah keberanian yang sering tidak dihargai.`,
 
-    `Kamu pernah kecewa. Sangat kecewa.
+`Kamu pernah kecewa.
 Saat harapanmu tak jadi kenyataan.
 Saat orang yang kamu percaya malah melukai.
 Tapi kamu tidak berubah jadi pahit.
 Kamu tetap punya hati yang hangat.
-Tetap mau mengerti.
 
 Bahkan saat kamu tidak dimengerti.
 Kamu pernah marah. Tapi kamu memilih diam.
 Kamu pernah takut. Tapi kamu tetap jalan.
 Kamu pernah sedih. Tapi kamu tetap senyum.`,
 
-    `Mungkin kamu lelah.
-Tapi kamu tidak menyerah.
+`Mungkin kamu lelah. Tapi kamu tidak menyerah.
+Kadang kamu iri. Tapi kamu tidak pernah berhenti jadi diri sendiri.
+Kamu pernah rindu... pada masa lalu.
 
-Kadang kamu iri. Melihat orang lain terlihat lebih bahagia, lebih stabil, lebih dicintai.
-Tapi kamu tidak pernah berhenti jadi diri sendiri.
-
-Kamu pernah rindu..
-Pada masa lalu.
-Pada versi dirimu yang dulu.
-
-Tapi kamu juga tahu..
-Kamu sudah berubah.
+Tapi kamu tahu... kamu sudah berubah.
 Kamu sudah tumbuh.
 
-Dan pertumbuhan itu tidak selalu indah, tapi selalu berarti.
+Dan pertumbuhan itu tidak selalu indah, tapi selalu berarti.`,
 
-Kamu tahu, kamu sudah melewati banyak badai.`,
-
-    `Ada luka yang tak pernah kamu ceritakan, tapi kamu bawa dengan diam.
-Ada kesedihan yang tak ada yang tahu, tapi kamu peluk erat setiap malam.
+`Ada luka yang tak pernah kamu ceritakan.
+Ada kesedihan yang tak ada yang tahu.
 
 Dan sekarang kamu di sini. Masih di sini.
 
 Hari ini, bukan tentang pesta.
 Tapi tentang pengakuan!
+
 Bahwa kamu istimewa.
 Bahwa kamu cukup.
-Bahwa kamu telah memberi banyak hal pada orang-orang, pada dunia.
+Bahwa kamu telah memberi banyak hal...
 
-Bahkan saat kamu sendiri kosong.
-Kamu mencintai tanpa diminta.
-Kamu menguatkan orang lain sambil menahan goyahmu sendiri.
-Kamu memaafkan tanpa permintaan maaf.`,
+Bahkan saat kamu sendiri kosong.`,
 
-    `Dan meskipun kamu sering merasa tak terlihat…
+`Dan meskipun kamu sering merasa tak terlihat…
 Rico lihat kamu!!!
 Rico dengar kamu!!!
 Rico perhatikan kamu!!!
-
-Mungkin tidak semua orang berkata ini padamu hari ini…
 
 Terima kasih sudah bertahan.
 Terima kasih sudah hidup.
 Terima kasih sudah tidak menyerah.`,
 
-    `Hari ini, rasakan semua yang kamu rasakan.
-Tidak usah ditahan.
+`Hari ini, rasakan semua yang kamu rasakan.
+Bahagia, haru, kecewa, cemas, rindu.
 
-Bahagia, haru, kecewa, cemas, rindu, semua boleh datang.
 Karena semua itu… adalah bukti kamu hidup sepenuhnya.
 
 Kamu bukan hanya bertambah umur.
 Kamu bertambah makna.
-
 Dan kamu pantas dirayakan.`,
 
-    `HAPPY BIRTHDAY 🤍
+`HAPPY BIRTHDAY 🤍
 
 Semoga tahun ini...
 Kamu lebih tenang.
@@ -256,14 +244,10 @@ Lebih berani untuk bahagia.
 Rico doakan kamu...
 Pulih tanpa terburu-buru,
 Bahagia tanpa syarat,
-Dicintai tanpa keraguan.
+Dicintai tanpa keraguan.`,
 
-Dan semoga, kamu juga bisa mencintai dirimu...
-Sedalam-dalamnya. ❤️`,
-
-    `*Trimakasih telah membaca secuil pesan dari Rico..*
-
-*Maaf karna Rico tidak bisa memberikan hal yang spesial untuk dirimu..*`
+`Terima kasih telah membaca secuil pesan dari Rico..
+Maaf karna Rico tidak bisa memberikan hal yang spesial untuk dirimu..`
   ];
 
   let current = 0;
@@ -281,7 +265,7 @@ Sedalam-dalamnya. ❤️`,
         return callback && callback();
       }
 
-      let line = lines[lineIndex];
+      const line = lines[lineIndex];
       let charIndex = 0;
       const p = document.createElement("p");
       p.style.marginBottom = "20px";
@@ -291,9 +275,9 @@ Sedalam-dalamnya. ❤️`,
         if (charIndex < line.length) {
           p.innerHTML += line.charAt(charIndex);
           charIndex++;
-          setTimeout(typeChar, 45); // kecepatan ketik
+          setTimeout(typeChar, 45);
         } else {
-          setTimeout(() => typeLine(lineIndex + 1), 600); // jeda antar kalimat
+          setTimeout(() => typeLine(lineIndex + 1), 600);
         }
       }
 
@@ -313,53 +297,46 @@ Sedalam-dalamnya. ❤️`,
       currentSlide.classList.add("active");
       nextBtn.classList.remove("show");
 
-      // Hujan bunga hanya di slide 9 (GIF)
       if (current === 9) flowerRain();
-
       if (current <= 8) {
         typeText(slides[current], `slide${current}`);
       } else {
-        nextBtn.classList.add("show"); // show langsung di slide 9/10/11
+        nextBtn.classList.add("show");
       }
     }
   }
 
   function flowerRain() {
-  for (let i = 0; i < 20; i++) {
-    const flower = document.createElement("div");
-    flower.classList.add("flower");
-    
-    // Random posisi horizontal
-    flower.style.left = Math.random() * window.innerWidth + "px";
+    for (let i = 0; i < 20; i++) {
+      const flower = document.createElement("div");
+      flower.classList.add("flower");
+      flower.style.left = Math.random() * window.innerWidth + "px";
 
-    // Ukuran acak antara 25–40px
-    const size = 25 + Math.random() * 15;
-    flower.style.width = size + "px";
-    flower.style.height = size + "px";
+      const size = 25 + Math.random() * 15;
+      flower.style.width = size + "px";
+      flower.style.height = size + "px";
 
-    // Durasi jatuh antara 4–7 detik
-    flower.style.animationDuration = 4 + Math.random() * 3 + "s";
+      flower.style.animationDuration = 4 + Math.random() * 3 + "s";
+      document.body.appendChild(flower);
 
-    document.body.appendChild(flower);
-
-    // Hapus setelah 8 detik
-    setTimeout(() => flower.remove(), 8000);
-  }
+      setTimeout(() => flower.remove(), 8000);
+    }
   }
 
   function answerQuiz() {
-  const response = document.getElementById("quiz-response");
-  response.innerHTML = "Hahaha… dasar kamu yaa 😤<br><br>Udah ah, salting Rico nanti 🫶";
-  
-  // Sembunyikan tombol lanjut, karena ini sudah akhir
-  nextBtn.classList.remove("show");
+    const response = document.getElementById("quiz-response");
+    response.innerHTML = "Hahaha… dasar kamu yaa 😤<br><br>Udah ah, salting Rico nanti 🫶";
+    nextBtn.classList.remove("show");
   }
 
-  // Autoplay audio fix
   document.addEventListener("click", function playAudioOnce() {
     document.getElementById("bgm").play();
     document.removeEventListener("click", playAudioOnce);
   });
+
+  // Mulai slide pertama
+  typeText(slides[0], "slide0");
 </script>
+
 </body>
 </html>
