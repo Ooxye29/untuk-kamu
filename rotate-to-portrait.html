@@ -28,6 +28,7 @@
       height: 100vh;
       text-align: center;
       padding: 30px;
+      transition: all 0.3s ease;
     }
 
     @keyframes bg {
@@ -41,9 +42,6 @@
       line-height: 1.8;
       max-width: 90%;
       transition: all 0.3s ease-in-out;
-    }
-
-    .fade {
       animation: fadeIn 1s ease-in;
     }
 
@@ -55,37 +53,40 @@
 </head>
 <body>
 
-<div class="text-box fade" id="notice">
-  layarnya di putar lagi ya cantik 🖤
-</div>
+  <div class="text-box" id="notice">
+    layarnya di putar lagi ya cantik 🖤
+  </div>
 
-<script>
-  const notice = document.getElementById("notice");
+  <script>
+    const notice = document.getElementById("notice");
 
-  function redirectIfPortrait() {
-    const isPortrait = window.matchMedia("(orientation: portrait)").matches;
-    if (isPortrait) {
-      const name = localStorage.getItem("username");
-      const dob = localStorage.getItem("dob");
-      if (name && dob) {
-        window.location.href = "surat.html";
-      } else {
-        window.location.href = "index.html";
+    function redirectIfPortrait() {
+      if (window.innerHeight > window.innerWidth) {
+        const name = localStorage.getItem("username");
+        const dob = localStorage.getItem("dob");
+        if (name && dob) {
+          window.location.href = "surat.html";
+        } else {
+          window.location.href = "index.html";
+        }
       }
     }
-  }
 
-  // Jalankan saat halaman dibuka & orientasi berubah
-  redirectIfPortrait();
-  window.addEventListener("orientationchange", () => {
-    setTimeout(redirectIfPortrait, 600);
-  });
+    // Saat orientasi berubah
+    window.addEventListener("orientationchange", () => {
+      setTimeout(redirectIfPortrait, 500);
+    });
 
-  // Jika terlalu lama tidak rotate
-  setTimeout(() => {
-    notice.innerHTML = `Ih... kamu ngeyel ya? 😠<br>Rico marah nih, masa disuruh muter aja nggak mau? 😤<br><br>...Tapi... ah yaudah, kamu tetep lucu sih 😌🖤`;
-  }, 30000);
-</script>
+    // Jaga-jaga kalau sudah portrait dari awal
+    window.addEventListener("load", () => {
+      redirectIfPortrait();
+    });
+
+    // Pesan tambahan setelah 30 detik
+    setTimeout(() => {
+      notice.innerHTML = "Ih... kamu ngeyel ya? 😠<br>Rico marah nih, masa disuruh muter aja nggak mau? 😤<br>Tapi... ah yaudah, kamu tetep lucu sih 😌🖤";
+    }, 30000);
+  </script>
 
 </body>
 </html>
