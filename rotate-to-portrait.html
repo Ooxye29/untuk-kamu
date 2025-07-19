@@ -25,9 +25,9 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      padding: 30px;
+      height: 100dvh;
       text-align: center;
+      padding: 30px;
     }
 
     @keyframes bg {
@@ -60,30 +60,32 @@
 </div>
 
 <script>
-  let warningText = document.getElementById('notice');
-  let timeoutTriggered = false;
+  const notice = document.getElementById("notice");
 
-  // Cek orientasi
-  function checkOrientation() {
-    if (window.innerHeight > window.innerWidth) return;
-    const name = localStorage.getItem("username");
-    const dob = localStorage.getItem("dob");
-    if (name && dob) {
-      window.location.href = "surat.html";
-    } else {
-      window.location.href = "index.html";
+  function redirectIfPortrait() {
+    if (window.innerHeight > window.innerWidth) {
+      const name = localStorage.getItem("username");
+      const dob = localStorage.getItem("dob");
+      if (name && dob) {
+        window.location.href = "surat.html";
+      } else {
+        window.location.href = "index.html";
+      }
     }
   }
 
-  // Peringatan jeda 30 detik
-  setTimeout(() => {
-    if (!timeoutTriggered) {
-      warningText.innerText = "Ih... kamu ngeyel ya? 😠\nRico marah nih, masa disuruh muter aja nggak mau? 😤\nTapi... ah yaudah, kamu tetep lucu sih 😌🖤";
-      timeoutTriggered = true;
-    }
-  }, 30000);
+  // Deteksi saat orientasi benar-benar berubah ke portrait
+  window.addEventListener("orientationchange", () => {
+    // Tunggu 500ms biar layout stabil
+    setTimeout(() => {
+      redirectIfPortrait();
+    }, 500);
+  });
 
-  setInterval(checkOrientation, 1000);
+  // Pesan tambahan jika terlalu lama
+  setTimeout(() => {
+    notice.innerHTML = "Ih... kamu ngeyel ya? 😠<br>Rico marah nih, masa disuruh muter aja nggak mau? 😤<br>Tapi... ah yaudah, kamu tetep lucu sih 😌🖤";
+  }, 30000);
 </script>
 
 </body>
